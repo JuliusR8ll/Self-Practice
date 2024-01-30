@@ -38,6 +38,46 @@ using namespace std;
    if(lh == rh)return pow(2,lh)-1;
    return 1+countCompleteTreeNodes(root->left) + countCompleteTreeNodes(root->right);
  }
+ void serialize(Node* root,vector<int> &v){
+   if(root == NULL)v.push_back(INT_MAX);
+   queue<Node*> q;
+   q.push(root);
+   while(!q.empty()){
+      Node* curr = q.front();
+      q.pop();
+      if(curr->left){
+         q.push(curr->left);
+         v.push_back(curr->data);
+      }
+      else v.push_back(INT_MAX);
+      if(curr->right){
+         q.push(curr->right);
+         v.push_back(curr->data);
+      }
+      else v.push_back(INT_MAX);
+      
+   }
+ }
+ Node* deserialize(vector<int> &v){
+   Node* root = new Node(v[0]);
+   queue<Node*> q;
+   q.push(root);
+   for(int i = 1;i<v.size()-1;i++){
+      Node* curr = q.front();
+      q.pop();
+      if(v[i] != INT_MAX){
+         curr->left = new Node(v[i]);
+         q.push(curr->left);
+      }
+      else curr ->left = NULL;
+      if(v[i+1] != INT_MAX){
+         curr->right = new Node(v[i+1]);
+         q.push(curr->right);
+      }
+      else curr ->right = NULL;
+   }
+   return root;
+ }
  int main(){
     Node* root = new Node(5);
     root ->left = new Node(2);

@@ -60,6 +60,30 @@ Node* insert(Node* root,int x){
     else if(root ->key < x)root -> right = insert(root->right,x);
     return root;
 }
+Node* itrInsert(Node* root,int x){
+    if(root == NULL){
+        return new Node(x);
+    }
+    Node* curr = root;
+    while(curr){
+        if(curr->key > x){
+            if(!curr->left){
+                curr -> left = new Node(x);
+                break;
+            }
+            curr = curr->left;
+        }
+        else if(curr ->key <x){
+            if(!curr->right){
+                curr -> right = new Node(x);
+                break;
+            }
+            curr = curr ->right;
+        }
+        else break;
+    }
+    return root;
+}
 int main(){
     Node* root = new Node(30);
     root ->left = new Node(20);

@@ -84,6 +84,34 @@ Node* itrInsert(Node* root,int x){
     }
     return root;
 }
+int getSuccessor(Node* root){ // helper function for deleteion
+    while(root && root->left){
+        root = root->left;
+    }
+    return root->key;
+}
+Node* deletion(Node* root,int x){
+    if(root == NULL)return root;
+    else if(root ->key > x)root ->left = deletion(root->left,x);
+    else if(root ->key < x)root ->right = deletion(root->right,x);
+    else{
+        if(root->left == NULL){
+            Node* curr = root->right;
+            delete root;
+            return curr;
+        }
+        else if(root->right == NULL){
+            Node* curr = root->left;
+            delete root;
+            return curr;
+        }
+        else{
+            root->key = getSuccessor(root);
+            root ->right = deletion(root->right,root->key);            
+        }
+    }
+    return root;
+}
 int main(){
     Node* root = new Node(30);
     root ->left = new Node(20);
@@ -93,7 +121,8 @@ int main(){
     root ->right->right = new Node(50);
     //cout << find(root,10);
     inorder(root);
-    insert(root,21);
+    //insert(root,21);
+    deletion(root,30);
     inorder(root);
     return 0;
 }

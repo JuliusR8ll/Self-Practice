@@ -126,6 +126,22 @@ Node* floor(Node* root,int x){
     }
     return res;
 }
+Node* ceil(Node* root,int x){
+    Node* res = NULL;
+    while ((root))
+    {
+        if(root->key == x)return root;
+        else if(root ->key > x){
+            res = root;
+            root = root ->left;
+        }
+        else{
+           root = root ->right;
+        }
+    }
+    return res;
+    
+}
 int main(){
     Node* root = new Node(30);
     root ->left = new Node(20);
@@ -138,7 +154,7 @@ int main(){
     //insert(root,21);
     //deletion(root,30);
     //inorder(root);
-    Node* curr = floor(root,15);
+    Node* curr = ceil(root,32);
     cout << curr->key;
     return 0;
 }

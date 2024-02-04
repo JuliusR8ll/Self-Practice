@@ -112,6 +112,20 @@ Node* deletion(Node* root,int x){
     }
     return root;
 }
+Node* floor(Node* root,int x){
+    Node* res = NULL;
+    while(root){
+        if(root->key == x)return root;
+        else if(root->key > x){
+            root = root->left;
+        }
+        else{
+            res = root;
+            root = root->right;
+        }
+    }
+    return res;
+}
 int main(){
     Node* root = new Node(30);
     root ->left = new Node(20);
@@ -120,9 +134,11 @@ int main(){
     root ->right = new Node(40);
     root ->right->right = new Node(50);
     //cout << find(root,10);
-    inorder(root);
+    //inorder(root);
     //insert(root,21);
-    deletion(root,30);
-    inorder(root);
+    //deletion(root,30);
+    //inorder(root);
+    Node* curr = floor(root,15);
+    cout << curr->key;
     return 0;
 }

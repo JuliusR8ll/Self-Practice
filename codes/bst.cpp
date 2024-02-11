@@ -142,6 +142,22 @@ Node* ceil(Node* root,int x){
     return res;
     
 }
+void leftCeiling(vector<int> &v){
+    set<int> s;
+    for(int x:v){
+        auto it = s.lower_bound(x);
+        if(it == s.end())cout << -1<<" ";
+        else cout << *it << " ";
+        s.insert(x);
+    }
+}
+bool checkBST(Node* root,int &prev){
+   if(root == NULL) return true;
+   if(checkBST(root->left,prev) == false)return false;
+   if(prev >= root->key)return false;
+   prev = root->key;
+   return checkBST(root->right,prev);
+}
 int main(){
     Node* root = new Node(30);
     root ->left = new Node(20);
@@ -155,6 +171,10 @@ int main(){
     //deletion(root,30);
     //inorder(root);
     Node* curr = ceil(root,32);
-    cout << curr->key;
+    //cout << curr->key;
+    vector<int> v = {10,21,3,6,8,4};
+    //leftCeiling(v);
+    int arg = INT_MIN;
+    cout << checkBST(root,arg);
     return 0;
 }

@@ -158,6 +158,32 @@ bool checkBST(Node* root,int &prev){
    prev = root->key;
    return checkBST(root->right,prev);
 }
+void dfs(Node* root, int &prev,Node* &n1, Node* &n2){// helper
+    if(root == NULL)return;
+    if(n1 && n2)return;
+    dfs(root->left,prev,n1,n2);
+    if(root->key < prev){
+        if(n1)n2 = root;
+        else n1 = root;
+    }
+    prev = root->key;
+    dfs(root->right,prev,n1,n2);
+}
+Node* swap4BST(Node* root){
+    int prev = INT_MIN;
+    Node* n1 = NULL, *n2 = NULL;
+    dfs(root,prev,n1,n2);
+    swap(n1,n2);
+    return root;
+}
+bool isPairSum(Node* root,int sum,unordered_set<int> &s){
+    if(root == NULL)return false;
+    if(isPairSum(root->left,sum,s))return true;
+    if(s.count(sum - root->key))return true;
+    else
+        s.insert(root->key);
+    return isPairSum(root->right,sum,s);
+}
 int main(){
     Node* root = new Node(30);
     root ->left = new Node(20);
@@ -175,6 +201,8 @@ int main(){
     vector<int> v = {10,21,3,6,8,4};
     //leftCeiling(v);
     int arg = INT_MIN;
-    cout << checkBST(root,arg);
+    //cout << checkBST(root,arg);
+    unordered_set<int> s;
+    cout << isPairSum(root,33,s);
     return 0;
 }

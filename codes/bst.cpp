@@ -184,6 +184,12 @@ bool isPairSum(Node* root,int sum,unordered_set<int> &s){
         s.insert(root->key);
     return isPairSum(root->right,sum,s);
 }
+void verticalSum(Node* root, int hd, map<int,int> &m){
+    if(root == NULL)return;
+    verticalSum(root->left,hd-1,m);
+    m[hd] += root->key;
+    verticalSum(root->right,hd+1,m);
+}
 int main(){
     Node* root = new Node(30);
     root ->left = new Node(20);
@@ -202,7 +208,11 @@ int main(){
     //leftCeiling(v);
     int arg = INT_MIN;
     //cout << checkBST(root,arg);
-    unordered_set<int> s;
-    cout << isPairSum(root,33,s);
+    //unordered_set<int> s;
+    //cout << isPairSum(root,33,s);
+    //map<int,int> m;
+    //int hd = 0;
+    //dfs(root,hd,m);
+    //for(auto x:m)cout << x.second <<" ";
     return 0;
 }

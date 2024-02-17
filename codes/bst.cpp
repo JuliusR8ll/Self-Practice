@@ -190,6 +190,24 @@ void verticalSum(Node* root, int hd, map<int,int> &m){
     m[hd] += root->key;
     verticalSum(root->right,hd+1,m);
 }
+void verticalTraversal(Node* root){
+    map<int,vector<int>> m;
+    queue<pair<Node*,int>> q;
+    q.push({root,0});
+    while(q.empty() == false){
+        auto p = q.front();
+        int hd = p.second;
+        Node* curr = p.first;
+        q.pop();
+        m[hd].push_back(curr->key);
+        if(curr->left)q.push({curr->left,hd-1});
+        if(curr->right)q.push({curr->right,hd+1});
+    }
+    for(auto x:m){
+        for(int e:x.second)cout << e << " ";
+        cout<<endl;
+    }
+}
 int main(){
     Node* root = new Node(30);
     root ->left = new Node(20);
@@ -212,7 +230,8 @@ int main(){
     //cout << isPairSum(root,33,s);
     //map<int,int> m;
     //int hd = 0;
-    //dfs(root,hd,m);
+    //verticalSum(root,hd,m);
     //for(auto x:m)cout << x.second <<" ";
+    verticalTraversal(root);
     return 0;
 }

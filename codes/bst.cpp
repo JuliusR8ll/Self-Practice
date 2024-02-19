@@ -208,6 +208,36 @@ void verticalTraversal(Node* root){
         cout<<endl;
     }
 }
+void topView(Node* root){
+    map<int,int> m;
+    queue<pair<Node*,int>> q;
+    q.push({root,0});
+    while(!q.empty()){
+        auto p = q.front();
+        Node* curr = p.first;
+        int hd = p.second;
+        q.pop();
+        if(m.count(hd) == 0)m[hd] = curr->key;
+        if(curr->left)q.push({curr->left,hd-1});
+        if(curr->right)q.push({curr->right,hd+1});
+    }
+    for(auto x:m)cout << x.second <<" ";
+}
+void bottomView(Node* root){
+    map<int,int> m;
+    queue<pair<Node*,int>> q;
+    q.push({root,0});
+    while(!q.empty()){
+        auto p = q.front();
+        Node* curr = p.first;
+        int hd = p.second;
+        q.pop();
+        m[hd] = curr->key;
+        if(curr->left)q.push({curr->left,hd-1});
+        if(curr->right)q.push({curr->right,hd+1});
+    }
+    for(auto x:m)cout << x.second <<" ";
+}
 int main(){
     Node* root = new Node(30);
     root ->left = new Node(20);
@@ -220,11 +250,11 @@ int main(){
     //insert(root,21);
     //deletion(root,30);
     //inorder(root);
-    Node* curr = ceil(root,32);
+    //Node* curr = ceil(root,32);
     //cout << curr->key;
-    vector<int> v = {10,21,3,6,8,4};
+    //vector<int> v = {10,21,3,6,8,4};
     //leftCeiling(v);
-    int arg = INT_MIN;
+    //int arg = INT_MIN;
     //cout << checkBST(root,arg);
     //unordered_set<int> s;
     //cout << isPairSum(root,33,s);
@@ -232,6 +262,8 @@ int main(){
     //int hd = 0;
     //verticalSum(root,hd,m);
     //for(auto x:m)cout << x.second <<" ";
-    verticalTraversal(root);
+    //verticalTraversal(root);
+    //topView(root);
+    bottomView(root);
     return 0;
 }

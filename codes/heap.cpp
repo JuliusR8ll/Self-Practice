@@ -54,6 +54,22 @@ void kLargestElements(vector<int> &v,int k){ // O(k + (n-k)logk)
         pq.pop();
     }
 }
+void kClosestElements(vector<int> &v,int k,int x){
+    priority_queue<pair<int ,int>> pq;
+    for(int i = 0;i<k;i++){
+        pq.push({abs(v[i] - x),i});
+    }
+    for(int i =k;i<v.size();i++){
+        if((abs(v[i] - x)) < pq.top().first){
+            pq.pop();
+            pq.push({abs(v[i] - x),i});
+        }
+    }
+    for(int i = 0;i<k;i++){
+        cout << v[pq.top().second] <<" ";
+        pq.pop();
+    }
+}
 int main(){
     //priority_queue<int> pq;// max heap
     //priority_queue<int,vector<int>,greater<int>> pq;// min heap
@@ -61,7 +77,7 @@ int main(){
     // pq.push(10);
     // pq.push(20);
     // pq.push(5);
-    vector<int> v = {10,9,7,8,4,70,50,60};
+    vector<int> v = {100,95,75,80,40,70,50,60};
     // priority_queue<int> pq(v.begin(),v.end());
     // cout << pq.size()<<endl;
     // cout << pq.top() <<endl;
@@ -72,6 +88,7 @@ int main(){
     //kSorted(v,4);
     //for(int x:v)cout <<x<<" ";
     //cout << maxItem(v,35);
-    kLargestElements(v,4);
+    //kLargestElements(v,4);
+    kClosestElements(v,3,80);
     return 0;
 }

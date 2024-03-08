@@ -70,6 +70,39 @@ void kClosestElements(vector<int> &v,int k,int x){
         pq.pop();
     }
 }
+struct Triplet{
+    int val,apos,vpos;
+    Triplet(int v,int ap,int vp){
+        val = v;apos = ap;vpos = vp;
+    }
+};
+struct MyCmp{
+    bool operator()(Triplet &t1,Triplet &t2){
+        return t1.val > t2.val;
+    }
+};
+void mergeKsortedArray(vector<vector<int>> &v){
+    priority_queue<Triplet,vector<Triplet>,MyCmp> pq;
+    int k = v.size();
+    for(int i = 0;i<k;i++){
+        Triplet t(v[i][0],i,0);
+        pq.push(t);
+    }
+    vector<int> res;
+    while(!pq.empty()){
+        res.push_back(pq.top().val);
+        int ap = pq.top().apos;
+        int vp = pq.top().vpos;
+        pq.pop();
+        if(v[ap].size()>++vp){
+            Triplet t(v[ap][vp],ap,vp);
+            pq.push(t);
+        } 
+    }
+    for(int i = 0;i<res.size();i++){
+        cout << res[i] <<" ";
+    }
+}
 int main(){
     //priority_queue<int> pq;// max heap
     //priority_queue<int,vector<int>,greater<int>> pq;// min heap
@@ -89,6 +122,9 @@ int main(){
     //for(int x:v)cout <<x<<" ";
     //cout << maxItem(v,35);
     //kLargestElements(v,4);
-    kClosestElements(v,3,80);
+    //kClosestElements(v,3,80);
+    vector<vector<int>> vec = {{1,5},{2,8,9},{4,6,8,9}};
+    //cout << vec.size() <<" "<< vec[2].size(); 
+    mergeKsortedArray(vec);
     return 0;
 }

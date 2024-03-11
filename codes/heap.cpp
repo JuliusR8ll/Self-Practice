@@ -103,6 +103,38 @@ void mergeKsortedArray(vector<vector<int>> &v){
         cout << res[i] <<" ";
     }
 }
+void streamMedian(vector<int> &v){
+    priority_queue<int> pq1;
+    priority_queue<int,vector<int>,greater<int>> pq2;
+    vector<double> res;
+    for(int &x:v){
+        if(pq1.empty()){
+            pq1.push(x);
+        }
+        else if(pq1.size() > pq2.size()){
+            if(pq1.top() > x){
+                pq1.push(x);
+                pq2.push(pq1.top());
+                pq1.pop();
+            }
+            else
+                pq2.push(x);
+        }
+        else{
+            if(pq2.top() < x){
+                pq2.push(x);
+                pq1.push(pq2.top());
+                pq2.pop();
+            }
+            else
+                pq1.push(x);
+        }
+        ((pq1.size() + pq2.size())%2)? res.push_back(pq1.top()) : res.push_back((double)(pq1.top() + pq2.top())/2.0);
+    }
+    for(int i = 0;i<res.size();i++){
+        cout << res[i] <<" ";
+    }
+}
 int main(){
     //priority_queue<int> pq;// max heap
     //priority_queue<int,vector<int>,greater<int>> pq;// min heap
@@ -110,7 +142,7 @@ int main(){
     // pq.push(10);
     // pq.push(20);
     // pq.push(5);
-    vector<int> v = {100,95,75,80,40,70,50,60};
+    vector<int> v = {20,10,30,7};
     // priority_queue<int> pq(v.begin(),v.end());
     // cout << pq.size()<<endl;
     // cout << pq.top() <<endl;
@@ -125,6 +157,7 @@ int main(){
     //kClosestElements(v,3,80);
     vector<vector<int>> vec = {{1,5},{2,8,9},{4,6,8,9}};
     //cout << vec.size() <<" "<< vec[2].size(); 
-    mergeKsortedArray(vec);
+    //mergeKsortedArray(vec);
+    streamMedian(v);
     return 0;
 }
